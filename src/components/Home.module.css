@@ -1,0 +1,8 @@
+.container {
+    position: fixed;
+    left: 200px;
+    background-color: palegreen;
+    width: 1000px;
+    height: 100vh;
+    margin-right: 20px;
+}
