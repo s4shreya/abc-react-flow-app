@@ -13,16 +13,75 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 import styles from "./Home.module.css";
 
+const customNodeTypes = {
+  circle: ({ id, data }) => (
+    <div
+      id={id}
+      className="custom-node"
+      style={{
+        width: "50px",
+        height: "50px",
+        borderRadius: "50%",
+        border: "1px solid black",
+        backgroundColor: "indianred",
+        color: "#fff",
+        textAlign: "center",
+        lineHeight: "50px",
+      }}
+      onContextMenu={(event) => event.preventDefault()} // Prevent default context menu to enable edge creation
+    //   data-sourcepos-x={50} // Set source position for circle node
+    //   data-sourcepos-y={50} // Set source position for circle node
+    >
+      {data.label}
+    </div>
+  ),
+  rectangle: ({ id, data }) => (
+    <div
+      id={id}
+      className="custom-node"
+      style={{
+        width: "60px",
+        height: "30px",
+        border: "1px solid black",
+        backgroundColor: "teal",
+        color: "#fff",
+        textAlign: "center",
+        lineHeight: "30px",
+      }}
+    >
+      {data.label}
+    </div>
+  ),
+};
+
 const Home = (props) => {
   const nodes = props.nodes,
     edges = props.edges,
     setEdges = props.setEdges,
     setNodes = props.setNodes;
 
-  const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    [setEdges]
-  );
+    const addEdgeBetweenNodes = (sourceId, targetId) => {
+        const newEdge = {
+          id: `${sourceId}-${targetId}`,
+          source: sourceId,
+          target: targetId,
+          animated: true
+        };
+        // setElements((els) => addEdge(newEdge, els));
+        setEdges(els => addEdge(newEdge, els));
+      };
+
+//   const onConnect = useCallback(
+//     (params) => setEdges((eds) => addEdge(params, eds)),
+//     [setEdges]
+//   );
+
+const onConnect = (params) => {
+    const { source, target } = params;
+    if (source && target) {
+      addEdgeBetweenNodes(source, target);
+    }
+  };
 
   const onNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -41,6 +100,7 @@ const Home = (props) => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        nodeTypes={customNodeTypes}
         fitView
       >
         <Controls />

@@ -7,14 +7,16 @@ const App = () => {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
 
-  const addNewNodeHandler = () => {
+
+
+  const addNewNodeHandler = (type) => {
     const node = {
       id: (nodes.length + 1).toString(),
+      type: type,
       position: { x: nodes.length * 4, y: nodes.length * 4 },
       data: { label: `${nodes.length + 1}` },
     };
     setNodes((prev) => [...prev, node]);
-    console.log(`nodes are ${JSON.stringify(nodes)}`);
   };
 
   return (
