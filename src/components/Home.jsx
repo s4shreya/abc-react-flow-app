@@ -1,7 +1,5 @@
 import React, { useCallback, useState } from "react";
 import ReactFlow, {
-  useNodesState,
-  useEdgesState,
   addEdge,
   MiniMap,
   Controls,
@@ -29,8 +27,6 @@ const customNodeTypes = {
         lineHeight: "50px",
       }}
       onContextMenu={(event) => event.preventDefault()} // Prevent default context menu to enable edge creation
-    //   data-sourcepos-x={50} // Set source position for circle node
-    //   data-sourcepos-y={50} // Set source position for circle node
     >
       {data.label}
     </div>
